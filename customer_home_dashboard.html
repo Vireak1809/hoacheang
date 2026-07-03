@@ -1,15 +1,14 @@
-<!DOCTYPE html><html lang="km"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Hao Chang - Customer Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<style>
-        body {
-            font-family: 'Hanuman', serif;
-            -webkit-font-smoothing: antialiased;
-        }
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Hao Chang - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Hanuman', serif; }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
@@ -18,426 +17,278 @@
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 24px;
+        #mobileMenu { display: none; }
+        #mobileMenu.open { display: block; }
+        /* ===== USER DROPDOWN FIX ===== */
+        .user-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+            pointer-events: none;
+            padding-top: 12px;
+            margin-top: -8px;
         }
-        @media (max-width: 768px) {
-            .bento-grid {
-                grid-template-columns: 1fr;
-            }
+        .group:hover .user-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0s;
+            pointer-events: auto;
         }
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: white;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-            z-index: 60;
-            border-radius: 0.75rem;
+        .user-dropdown-inner {
+            background: white;
             border: 1px solid #c4c6cf;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
             padding: 8px 0;
         }
-        .group:hover .dropdown-menu {
-            display: block;
-        }
+        /* ===== END USER DROPDOWN FIX ===== */
     </style>
-<script id="tailwind-config">
+    <script>
         tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "tertiary-container": "#31373b",
-                      "surface-dim": "#d0daf0",
-                      "surface-container-low": "#f0f3ff",
-                      "on-primary-fixed": "#001b3c",
-                      "on-error-container": "#93000a",
-                      "surface": "#f9f9ff",
-                      "on-primary-fixed-variant": "#2d476f",
-                      "on-surface-variant": "#43474e",
-                      "outline-variant": "#c4c6cf",
-                      "on-secondary-fixed": "#2b1700",
-                      "background": "#f9f9ff",
-                      "inverse-on-surface": "#ebf1ff",
-                      "on-primary": "#ffffff",
-                      "on-primary-container": "#86a0cd",
-                      "surface-variant": "#d9e3f9",
-                      "primary-fixed": "#d6e3ff",
-                      "on-error": "#ffffff",
-                      "on-tertiary-fixed": "#171c20",
-                      "secondary-fixed-dim": "#ffb866",
-                      "tertiary": "#1c2225",
-                      "primary": "#002045",
-                      "surface-container-lowest": "#ffffff",
-                      "error": "#ba1a1a",
-                      "on-surface": "#121c2c",
-                      "surface-container": "#e7eeff",
-                      "inverse-surface": "#273141",
-                      "on-tertiary": "#ffffff",
-                      "secondary-fixed": "#ffddba",
-                      "outline": "#74777f",
-                      "secondary-container": "#ffb55c",
-                      "inverse-primary": "#adc7f7",
-                      "error-container": "#ffdad6",
-                      "surface-tint": "#455f88",
-                      "surface-container-highest": "#d9e3f9",
-                      "on-secondary": "#ffffff",
-                      "secondary": "#875200",
-                      "surface-bright": "#f9f9ff",
-                      "tertiary-fixed-dim": "#c2c7cc",
-                      "on-tertiary-fixed-variant": "#42474c",
-                      "on-secondary-container": "#744600",
-                      "primary-container": "#1a365d",
-                      "on-background": "#121c2c",
-                      "on-tertiary-container": "#9aa0a4",
-                      "surface-container-high": "#dee8ff",
-                      "primary-fixed-dim": "#adc7f7",
-                      "on-secondary-fixed-variant": "#673d00",
-                      "tertiary-fixed": "#dee3e8"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "spacing": {
-                      "unit-md": "16px",
-                      "unit-xl": "48px",
-                      "container-max": "1200px",
-                      "unit-lg": "24px",
-                      "margin-mobile": "16px",
-                      "unit-sm": "8px",
-                      "gutter": "24px",
-                      "margin-desktop": "48px",
-                      "unit-xs": "4px"
-              },
-              "fontSize": {
-                      "headline-lg-mobile": ["28px", {"lineHeight": "1.3", "fontWeight": "700"}],
-                      "headline-xl": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                      "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
-                      "label-sm": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}],
-                      "headline-md-mobile": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
-                      "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
-                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                      "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}]
-              }
-            },
-          },
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#002045",
+                        "secondary": "#875200",
+                        "secondary-container": "#ffb55c",
+                        "surface": "#f9f9ff",
+                        "surface-container": "#e7eeff",
+                        "surface-container-low": "#f0f3ff",
+                        "surface-container-highest": "#d9e3f9",
+                        "on-surface": "#121c2c",
+                        "on-surface-variant": "#43474e",
+                        "outline": "#74777f",
+                        "outline-variant": "#c4c6cf",
+                        "background": "#f9f9ff",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#1a365d",
+                        "on-primary-container": "#86a0cd",
+                        "primary-fixed": "#d6e3ff",
+                        "secondary-fixed": "#ffddba",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}]
+                    }
+                }
+            }
         }
     </script>
 </head>
-<body class="bg-background text-on-background min-h-screen flex flex-col">
-<!-- TopNavBar: Customer State (Standardized) -->
-<header class="sticky top-0 z-50 bg-surface border-b border-outline-variant shadow-sm h-20 w-full">
-  <div class="flex justify-between items-center px-unit-lg md:px-margin-desktop h-full max-w-container-max mx-auto">
-    <!-- Brand + Navigation -->
-    <div class="flex items-center gap-unit-xl h-full">
-      <a class="text-headline-md font-bold text-primary" href="index.html">Hao Chang</a>
-      <nav class="hidden md:flex items-center gap-unit-lg h-full">
-        <a class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md h-full flex items-center" href="index.html">ទំព័រដើម</a>
-<!-- Dropdown Services -->
-<div class="group relative h-full flex items-center">
-<button class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-1">
-                    សេវាកម្ម <span class="material-symbols-outlined text-[18px]">expand_more</span>
-</button>
-<div class="dropdown-menu">
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">ជាងទឹក</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">ជាងភ្លើង</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">ជាងម៉ាស៊ីនត្រជាក់</a>
-<hr class="my-1 border-outline-variant">
-<a class="block px-4 py-2 text-secondary font-bold hover:bg-surface-container-low transition-colors text-label-md" href="#">សេវាបន្ទាន់</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">កក់ទុកជាមុន</a>
-<a class="block px-4 py-2 text-primary font-bold hover:bg-surface-container-low transition-colors text-label-md" href="#">មើលសេវាកម្មទាំងអស់</a>
-</div>
-</div>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#">ស្វែងរកជាង</a>
-<!-- Dropdown Bookings -->
-<div class="group relative h-full flex items-center">
-<button class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-1">
-                    ការកក់របស់ខ្ញុំ <span class="material-symbols-outlined text-[18px]">expand_more</span>
-</button>
-<div class="dropdown-menu">
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">កក់សេវាថ្មី</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">ការកក់កំពុងដំណើរការ</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">ប្រវត្តិការកក់</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">E-Invoice</a>
-<a class="block px-4 py-2 text-primary hover:bg-surface-container-low transition-colors text-label-md" href="#">កក់ម្ដងទៀត</a>
-</div>
-</div>
-<a class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#">សារ</a>
-<!-- Dropdown Help -->
-<div class="group relative h-full flex items-center">
-<button class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-1">
-                    ជំនួយ <span class="material-symbols-outlined text-[18px]">expand_more</span>
-</button>
-<div class="dropdown-menu">
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">សំណួរញឹកញាប់</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">របៀបប្រើ Platform</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">ទាក់ទង Support</a>
-<a class="block px-4 py-2 text-error hover:bg-error-container/10 transition-colors text-label-md" href="#">រាយការណ៍បញ្ហា</a>
-</div>
-</div>
-</div>
-</div>
-<div class="flex items-center gap-unit-md">
-<!-- Language Switcher -->
-<div class="hidden md:flex items-center gap-2 text-label-sm font-medium mr-2">
-<span class="text-primary border-b border-primary">ខ្មែរ</span>
-<span class="text-outline">|</span>
-<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">English</a>
-</div>
-<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-all relative">
-                    notifications
-                    <span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
-</button>
-<!-- Profile with Dropdown -->
-<div class="group relative flex items-center gap-unit-sm border-l border-outline-variant pl-unit-md ml-unit-sm cursor-pointer py-4 h-full">
-<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
-<span class="material-symbols-outlined">account_circle</span>
-</div>
-<div class="hidden md:flex flex-col items-start leading-tight">
-<span class="font-label-md text-on-surface">សុភា</span>
-<span class="text-[10px] text-on-surface-variant">គណនី</span>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span>
-<div class="dropdown-menu right-0 left-auto mt-0">
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">ព័ត៌មានគណនី</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">ទីតាំងដែលបានរក្សាទុក</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">ការកក់របស់ខ្ញុំ</a>
-<a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="#">ការកំណត់</a>
-<hr class="my-1 border-outline-variant">
-<a class="block px-4 py-2 text-error hover:bg-error-container/10 transition-colors text-label-md font-bold" href="#">ចាកចេញ</a>
-</div>
-</div>
-</div>
-</div>
-</nav>
-<main class="flex-grow">
-<!-- Hero Section & Greeting -->
-<section class="relative pt-unit-xl pb-32 overflow-hidden">
-<div class="max-w-container-max mx-auto px-unit-lg md:px-margin-desktop relative z-10">
-<div class="flex flex-col md:flex-row justify-between items-end gap-unit-lg">
-<div>
-<h1 class="font-headline-lg text-headline-lg md:font-headline-xl md:text-headline-xl text-primary mb-2">សួស្ដី, សុភា</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant">តើអ្នកត្រូវការជាងប្រភេទណាថ្ងៃនេះ?</p>
-</div>
-<!-- Current Location Card -->
-<div class="bg-surface-container-highest rounded-xl p-unit-md flex items-center gap-unit-sm shadow-sm border border-outline-variant/30">
-<span class="material-symbols-outlined text-primary" data-weight="fill">location_on</span>
-<div>
-<p class="text-label-sm font-label-sm text-on-surface-variant">ទីតាំងបច្ចុប្បន្ន</p>
-<p class="font-label-md text-label-md text-primary">បុរីប៉េងហួត បឹងស្នោរ, ភ្នំពេញ</p>
-</div>
-</div>
-</div>
-<!-- Search Bar Container -->
-<div class="mt-12 max-w-2xl">
-<div class="relative group">
-<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-<span class="material-symbols-outlined text-outline">search</span>
-</div>
-<input class="w-full pl-12 pr-4 py-5 bg-white border-none rounded-2xl shadow-xl focus:ring-2 focus:ring-primary/20 text-body-md transition-all group-hover:shadow-2xl" placeholder="ស្វែងរកសេវាកម្ម (ឧទាហរណ៍៖ ជួសជុលម៉ាស៊ីនត្រជាក់...)" type="text">
-<button class="absolute right-3 top-2 bottom-2 px-6 bg-primary text-white rounded-xl font-label-md hover:bg-primary-container transition-all">ស្វែងរក</button>
-</div>
-</div>
-</div>
-</section>
-<!-- Main Content Area -->
-<section class="max-w-container-max mx-auto px-unit-lg md:px-margin-desktop -mt-16 relative z-20 pb-unit-xl">
-<div class="bento-grid">
-<!-- Service Categories Grid -->
-<div class="col-span-12 md:col-span-8 flex flex-col gap-unit-lg">
-<div class="flex justify-between items-center">
-<h2 class="font-headline-md text-headline-md text-primary">សេវាកម្មពេញនិយម</h2>
-<a class="text-primary font-label-md flex items-center gap-1 hover:underline" href="#">មើលទាំងអស់ <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-unit-lg">
-<!-- Plumbing -->
-<div class="group bg-white rounded-2xl p-unit-lg shadow-sm hover:shadow-xl transition-all border border-transparent hover:border-primary/10 flex flex-col items-center text-center cursor-pointer">
-<div class="w-20 h-20 rounded-full bg-surface-container-lowest flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[40px] text-primary" data-weight="fill">plumbing</span>
-</div>
-<h3 class="font-headline-md-mobile text-headline-md-mobile text-primary mb-1">ជាងទឹក</h3>
-<p class="text-label-sm text-on-surface-variant">ចាប់ផ្ដើមពី $15</p>
-</div>
-<!-- Electric -->
-<div class="group bg-white rounded-2xl p-unit-lg shadow-sm hover:shadow-xl transition-all border border-transparent hover:border-primary/10 flex flex-col items-center text-center cursor-pointer">
-<div class="w-20 h-20 rounded-full bg-surface-container-lowest flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[40px] text-primary" data-weight="fill">electrical_services</span>
-</div>
-<h3 class="font-headline-md-mobile text-headline-md-mobile text-primary mb-1">ជាងអគ្គិសនី</h3>
-<p class="text-label-sm text-on-surface-variant">ចាប់ផ្ដើមពី $20</p>
-</div>
-<!-- AC -->
-<div class="group bg-white rounded-2xl p-unit-lg shadow-sm hover:shadow-xl transition-all border border-transparent hover:border-primary/10 flex flex-col items-center text-center cursor-pointer">
-<div class="w-20 h-20 rounded-full bg-surface-container-lowest flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[40px] text-primary" data-weight="fill">ac_unit</span>
-</div>
-<h3 class="font-headline-md-mobile text-headline-md-mobile text-primary mb-1">ជាងម៉ាស៊ីនត្រជាក់</h3>
-<p class="text-label-sm text-on-surface-variant">ចាប់ផ្ដើមពី $18</p>
-</div>
-</div>
-<!-- Emergency Banner -->
-<div class="relative rounded-3xl overflow-hidden mt-4">
-<div class="absolute inset-0 bg-cover bg-center" data-alt="A professional technician team standing in front of a modern home in Phnom Penh during sunrise. The atmosphere is warm and professional with deep blue accents and orange safety gear. High quality corporate photography with soft lighting and shallow depth of field." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBo4p1mQh7F6JsqgVVwD6rVKOoPjflbjEVsnw4On_a044oc6uMgP16GzvAaAD44i3FABbnFb-lzt88Fd4iAH0CjZ21bJx5wc9wxJpXAaRhYoFRAPfCdnELIrAR-rhUzyHA1_-T1DFoGYZpwGJ6N_gZLib3NTIEIj2TgkH246O7C1kCk8xU3fpZ3tX44YZeJEP3vQ8UEhETxpv-g819eE8Uq23wtf4bKSs9jnsolQu4aDnXrcd67K4B_Nvk0r9YGLTMNovA_wQiaFs')"></div>
-<div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent"></div>
-<div class="relative p-unit-xl md:p-12 flex flex-col items-start gap-unit-md max-w-lg">
-<span class="px-3 py-1 bg-secondary text-white rounded-full text-label-sm font-bold uppercase tracking-wider">សេវាបន្ទាន់ 24/7</span>
-<h2 class="font-headline-lg text-white leading-tight">ត្រូវការជាងបន្ទាន់?</h2>
-<p class="text-white/80 font-body-md">យើងមានបច្ចេកទេសជំនាញៗនៅក្បែរលោកអ្នកបំផុត ដែលអាចទៅដល់ក្នុងរយៈពេល ២០ នាទី។</p>
-<button class="mt-4 bg-secondary hover:bg-secondary-container text-white px-8 py-4 rounded-xl font-headline-md-mobile shadow-lg hover:scale-105 transition-all flex items-center gap-unit-sm">
-<span class="material-symbols-outlined">call</span>
-                                ហៅជាងបន្ទាន់
-                            </button>
-</div>
-</div>
-</div>
-<!-- Right Sidebar: Recent Booking & Status -->
-<div class="col-span-12 md:col-span-4 flex flex-col gap-unit-lg">
-<h2 class="font-headline-md text-headline-md text-primary">ការកក់ចុងក្រោយ</h2>
-<div class="bg-white rounded-3xl p-unit-lg shadow-sm border border-outline-variant/30 flex flex-col gap-unit-lg">
-<div class="flex justify-between items-start">
-<div class="flex items-center gap-unit-md">
-<div class="w-12 h-12 rounded-2xl overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A portrait of a friendly Khmer male technician in a clean blue uniform, smiling and looking professional against a neutral interior background. Bright, high-key studio lighting with a warm and trustworthy feeling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_oRyXbP503tpXnC3vuL68JH0woLhiBJLQ4T92NIxEeIi-pFaUKHuW1CXVd9icuXDJogc5gw1O4q6WDDdZ0meQ5HuD62qBwQbhN9CvnpQgCUUGHpi1gKw_CzyCA4tOoY-SVRC5gEjvFKoNxFpysJxLOu2pugjpXZdplEMvgLPhYVZsfMycvMp-QMhdudO0O0Y7t5xRxi6BJKDtR74u8GZRSTOMqhHsSJwEcnmByVItOF3wJP3UI5Q3vdv1S3u45hxr5djBGWDlUzc">
-</div>
-<div>
-<h4 class="font-label-md text-on-surface">ជាង វិច្ឆិកា</h4>
-<p class="text-label-sm text-on-surface-variant">ជំនាញជួសជុលម៉ាស៊ីនត្រជាក់</p>
-</div>
-</div>
-<span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed rounded-full text-[10px] font-bold uppercase">កំពុងមកដល់</span>
-</div>
-<!-- Booking Timeline -->
-<div class="relative pl-6 flex flex-col gap-unit-lg">
-<div class="absolute left-[7px] top-2 bottom-2 w-0.5 bg-surface-container-highest"></div>
-<div class="relative flex items-center gap-unit-md">
-<div class="absolute -left-[23px] w-4 h-4 rounded-full bg-primary flex items-center justify-center">
-<span class="material-symbols-outlined text-[10px] text-white">check</span>
-</div>
-<div class="flex-grow">
-<p class="font-label-sm text-on-surface">បានបញ្ជាក់ការកក់</p>
-<p class="text-[12px] text-on-surface-variant">ថ្ងៃនេះ, 09:30 AM</p>
-</div>
-</div>
-<div class="relative flex items-center gap-unit-md">
-<div class="absolute -left-[23px] w-4 h-4 rounded-full bg-secondary border-4 border-secondary-fixed animate-pulse"></div>
-<div class="flex-grow">
-<p class="font-label-sm text-on-surface">ជាងកំពុងធ្វើដំណើរ</p>
-<p class="text-[12px] text-on-surface-variant">នឹងមកដល់ក្នុងរយៈពេល ១០ នាទី</p>
-</div>
-</div>
-<div class="relative flex items-center gap-unit-md opacity-40">
-<div class="absolute -left-[23px] w-4 h-4 rounded-full bg-outline-variant"></div>
-<div class="flex-grow">
-<p class="font-label-sm text-on-surface">ការងារត្រូវបានបញ្ចប់</p>
-<p class="text-[12px] text-on-surface-variant">រង់ចាំការបញ្ជាក់</p>
-</div>
-</div>
-</div>
-<div class="pt-unit-md border-t border-outline-variant flex flex-col gap-unit-sm">
-<div class="flex justify-between text-label-sm">
-<span class="text-on-surface-variant">តម្លៃសរុបប្រហាក់ប្រហែល</span>
-<span class="font-bold text-primary">$18.00</span>
-</div>
-<button class="w-full py-3 border border-primary text-primary rounded-xl font-label-md hover:bg-primary/5 transition-all">មើលព័ត៌មានលម្អិត</button>
-</div>
-</div>
-<!-- Community/Tips Card -->
-<div class="bg-primary-container rounded-3xl p-unit-lg text-white">
-<span class="material-symbols-outlined text-secondary text-[32px] mb-2" data-weight="fill">lightbulb</span>
-<h4 class="font-headline-md-mobile mb-2">គន្លឹះថែទាំផ្ទះ</h4>
-<p class="text-on-primary-container font-body-md mb-4">តើលោកអ្នកដឹងទេថា ការលាងម៉ាស៊ីនត្រជាក់រាល់ ៦ខែម្តង ជួយសន្សំសំចៃអគ្គិសនីបានដល់ ២០%?</p>
-<a class="text-secondary font-label-md flex items-center gap-1" href="#">អានបន្ថែម <span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
-</div>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="bg-primary-container text-white py-unit-xl">
-<div class="max-w-container-max mx-auto px-unit-lg md:px-margin-desktop">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-unit-xl mb-unit-xl">
-<!-- Column 1: Brand -->
-<div class="flex flex-col gap-unit-md">
-<span class="text-headline-md font-bold">Hao Chang</span>
-<p class="text-on-primary-container font-body-md">យើងជាដៃគូដ៏ទុកចិត្តបំផុតសម្រាប់រាល់ការជួសជុល និងថែទាំគេហដ្ឋានរបស់លោកអ្នកនៅក្នុងប្រទេសកម្ពុជា។</p>
-<div class="flex gap-unit-md mt-2">
-<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
-<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
-<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary transition-colors" href="#"><span class="material-symbols-outlined">call</span></a>
-</div>
-</div>
-<!-- Column 2: Quick Links -->
-<div class="flex flex-col gap-unit-sm">
-<h5 class="font-bold mb-2">តំណភ្ជាប់រហ័ស</h5>
-<a class="text-on-primary-container hover:text-secondary transition-colors font-label-md" href="#">ទំព័រដើម</a>
-<a class="text-on-primary-container hover:text-secondary transition-colors font-label-md" href="#">អំពីយើង</a>
-<a class="text-on-primary-container hover:text-secondary transition-colors font-label-md" href="#">អាជីព</a>
-<a class="text-on-primary-container hover:text-secondary transition-colors font-label-md" href="#">ប្លុក</a>
-</div>
-<!-- Column 3: Services -->
-<div class="flex flex-col gap-unit-sm">
-<h5 class="font-bold mb-2">សេវាកម្ម</h5>
-<a class="text-on-primary-container hover:text-secondary transition-colors font-label-md" href="#">ជាងទឹក</a>
-<a class="text-on-primary-container hover:text-secondary transition-colors font-label-md" href="#">ជាងអគ្គិសនី</a>
-<a class="text-on-primary-container hover:text-secondary transition-colors font-label-md" href="#">ម៉ាស៊ីនត្រជាក់</a>
-<a class="text-on-primary-container hover:text-secondary transition-colors font-label-md" href="#">ជាងសំណង់</a>
-</div>
-<!-- Column 4: Contact -->
-<div class="flex flex-col gap-unit-sm">
-<h5 class="font-bold mb-2">ទំនាក់ទំនង</h5>
-<div class="flex items-center gap-unit-sm text-on-primary-container">
-<span class="material-symbols-outlined text-[20px]">location_on</span>
-<span class="font-label-md">ភ្នំពេញ, កម្ពុជា</span>
-</div>
-<div class="flex items-center gap-unit-sm text-on-primary-container">
-<span class="material-symbols-outlined text-[20px]">call</span>
-<span class="font-label-md">+855 12 345 678</span>
-</div>
-<div class="flex items-center gap-unit-sm text-on-primary-container">
-<span class="material-symbols-outlined text-[20px]">mail</span>
-<span class="font-label-md">info@haochang.com</span>
-</div>
-</div>
-</div>
-<div class="border-t border-white/10 pt-unit-md flex flex-col md:flex-row justify-between items-center gap-unit-md">
-<p class="text-label-sm text-on-primary-container">© 2024 Hao Chang Cambodia. All rights reserved.</p>
-<div class="flex gap-unit-lg">
-<a class="text-label-sm text-on-primary-container hover:text-white" href="#">គោលការណ៍ឯកជនភាព</a>
-<a class="text-label-sm text-on-primary-container hover:text-white" href="#">លក្ខខណ្ឌប្រើប្រាស់</a>
-</div>
-</div>
-</div>
-</footer>
-<script>
-        // Micro-interactions
-        document.querySelectorAll('.group').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                if (!card.classList.contains('h-full')) {
-                    card.style.transform = 'translateY(-4px)';
-                }
-            });
-            card.addEventListener('mouseleave', () => {
-                if (!card.classList.contains('h-full')) {
-                    card.style.transform = 'translateY(0)';
-                }
-            });
-        });
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
 
-        // Search bar focus effect
-        const searchInput = document.querySelector('input[type="text"]');
-        searchInput.addEventListener('focus', () => {
-            searchInput.parentElement.classList.add('ring-4', 'ring-primary/10');
-        });
-        searchInput.addEventListener('blur', () => {
-            searchInput.parentElement.classList.remove('ring-4', 'ring-primary/10');
-        });
+    <!-- ========== TOP NAV BAR (Customer) ========== -->
+    <header class="bg-surface border-b border-outline-variant shadow-sm sticky top-0 z-50">
+        <div class="flex justify-between items-center px-4 md:px-12 h-20 max-w-[1200px] mx-auto">
+            <a href="index.html" class="text-2xl font-bold text-primary">ហៅជាង</a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="index.html" class="text-primary font-bold border-b-2 border-primary pb-1">ទំព័រដើម</a>
+                <a href="select_service_page.html" class="text-on-surface-variant hover:text-primary transition">ជាងទឹក</a>
+                <a href="select_detail_page_electrician.html" class="text-on-surface-variant hover:text-primary transition">ជាងភ្លើង</a>
+                <a href="Select Service Page - AC Technician .html" class="text-on-surface-variant hover:text-primary transition">ម៉ាស៊ីនត្រជាក់</a>
+                <a href="available_technicians_page.html" class="text-on-surface-variant hover:text-primary transition">ស្វែងរកជាង</a>
+                <a href="booking_history_page.html" class="text-on-surface-variant hover:text-primary transition">ការកក់</a>
+                <a href="messages_page.html" class="text-on-surface-variant hover:text-primary transition">សារ</a>
+            </nav>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-3">
+                <div class="hidden md:flex items-center gap-2 text-sm">
+                    <span class="text-primary font-bold">ខ្មែរ</span>
+                    <span class="text-outline">|</span>
+                    <a href="#" class="text-on-surface-variant hover:text-primary">English</a>
+                </div>
+
+                <button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition relative">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-1 right-1 w-2 h-2 bg-secondary rounded-full border-2 border-surface"></span>
+                </button>
+
+                <!-- Profile (FIXED DROPDOWN) -->
+                <div class="relative group cursor-pointer">
+                    <div class="flex items-center gap-2 pl-4 border-l border-outline-variant">
+                        <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary overflow-hidden">
+                            <span class="material-symbols-outlined">account_circle</span>
+                        </div>
+                        <span class="hidden sm:block text-sm font-medium">សុភា</span>
+                        <span class="material-symbols-outlined text-sm">expand_more</span>
+                    </div>
+                    <!-- Dropdown (FIXED) -->
+                    <div class="user-dropdown absolute right-0 top-[80%] w-56 z-50">
+                        <div class="user-dropdown-inner">
+                            <a href="customer_profile_page_redesigned.html" class="block px-4 py-2 text-sm hover:bg-surface-container transition">ព័ត៌មានគណនី</a>
+                            <a href="booking_history_page.html" class="block px-4 py-2 text-sm hover:bg-surface-container transition">ការកក់របស់ខ្ញុំ</a>
+                            <a href="help_support_page_standardized.html" class="block px-4 py-2 text-sm hover:bg-surface-container transition">ជំនួយ</a>
+                            <div class="border-t border-outline-variant my-1"></div>
+                            <a href="login_page.html" class="block px-4 py-2 text-sm text-error hover:bg-error-container/10 transition">ចាកចេញ</a>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="md:hidden p-2 text-primary" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-surface border-b border-outline-variant px-4 py-4">
+            <a href="index.html" class="block py-3 text-primary font-bold border-b border-outline-variant/30">ទំព័រដើម</a>
+            <a href="select_service_page.html" class="block py-3 text-on-surface-variant hover:text-primary border-b border-outline-variant/30">ជាងទឹក</a>
+            <a href="select_detail_page_electrician.html" class="block py-3 text-on-surface-variant hover:text-primary border-b border-outline-variant/30">ជាងភ្លើង</a>
+            <a href="Select Service Page - AC Technician .html" class="block py-3 text-on-surface-variant hover:text-primary border-b border-outline-variant/30">ម៉ាស៊ីនត្រជាក់</a>
+            <a href="available_technicians_page.html" class="block py-3 text-on-surface-variant hover:text-primary border-b border-outline-variant/30">ស្វែងរកជាង</a>
+            <a href="booking_history_page.html" class="block py-3 text-on-surface-variant hover:text-primary border-b border-outline-variant/30">ការកក់</a>
+            <a href="messages_page.html" class="block py-3 text-on-surface-variant hover:text-primary border-b border-outline-variant/30">សារ</a>
+            <a href="customer_profile_page_redesigned.html" class="block py-3 text-on-surface-variant hover:text-primary border-b border-outline-variant/30">គណនី</a>
+            <a href="help_support_page_standardized.html" class="block py-3 text-on-surface-variant hover:text-primary border-b border-outline-variant/30">ជំនួយ</a>
+            <a href="login_page.html" class="block py-3 text-error hover:bg-error-container/10">ចាកចេញ</a>
+        </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="flex-grow max-w-[1200px] mx-auto px-4 py-6 md:py-10 w-full">
+
+        <!-- Hero Greeting -->
+        <section class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-primary">សួស្ដី, សុភា</h1>
+            <p class="text-lg text-on-surface-variant">តើអ្នកត្រូវការជាងប្រភេទណាថ្ងៃនេះ?</p>
+        </section>
+
+        <!-- Search Bar -->
+        <div class="max-w-2xl mb-10">
+            <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
+                <input class="w-full pl-12 pr-4 py-4 bg-white rounded-2xl shadow-lg focus:ring-2 focus:ring-primary/20 outline-none text-base" placeholder="ស្វែងរកសេវាកម្ម...">
+                <a href="available_technicians_page.html">
+                    <button class="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2 bg-primary text-white rounded-xl text-sm font-medium hover:opacity-90 transition">ស្វែងរក</button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Service Categories Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <a href="select_service_page.html" class="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition border border-transparent hover:border-primary/10 text-center">
+                <div class="w-20 h-20 rounded-full bg-surface-container-lowest flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition">
+                    <span class="material-symbols-outlined text-4xl text-primary">plumbing</span>
+                </div>
+                <h3 class="text-xl font-bold text-primary">ជាងទឹក</h3>
+                <p class="text-sm text-on-surface-variant">ចាប់ផ្ដើមពី $15</p>
+            </a>
+
+            <a href="select_detail_page_electrician.html" class="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition border border-transparent hover:border-primary/10 text-center">
+                <div class="w-20 h-20 rounded-full bg-surface-container-lowest flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition">
+                    <span class="material-symbols-outlined text-4xl text-primary">electrical_services</span>
+                </div>
+                <h3 class="text-xl font-bold text-primary">ជាងអគ្គិសនី</h3>
+                <p class="text-sm text-on-surface-variant">ចាប់ផ្ដើមពី $20</p>
+            </a>
+
+            <a href="Select Service Page - AC Technician .html" class="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition border border-transparent hover:border-primary/10 text-center">
+                <div class="w-20 h-20 rounded-full bg-surface-container-lowest flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition">
+                    <span class="material-symbols-outlined text-4xl text-primary">ac_unit</span>
+                </div>
+                <h3 class="text-xl font-bold text-primary">ម៉ាស៊ីនត្រជាក់</h3>
+                <p class="text-sm text-on-surface-variant">ចាប់ផ្ដើមពី $18</p>
+            </a>
+        </div>
+
+        <!-- Emergency Banner -->
+        <div class="relative rounded-3xl overflow-hidden mb-10">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent"></div>
+            <div class="relative p-8 md:p-12 flex flex-col items-start gap-4 max-w-lg">
+                <span class="px-3 py-1 bg-secondary text-white rounded-full text-xs font-bold uppercase tracking-wider">សេវាបន្ទាន់ 24/7</span>
+                <h2 class="text-3xl font-bold text-white">ត្រូវការជាងបន្ទាន់?</h2>
+                <p class="text-white/80 text-base">យើងមានបច្ចេកទេសជំនាញៗនៅក្បែរលោកអ្នកបំផុត។</p>
+                <a href="problem_detail_page.html">
+                    <button class="mt-2 bg-secondary hover:bg-secondary-container text-white px-8 py-4 rounded-xl text-lg font-bold shadow-lg hover:scale-105 transition flex items-center gap-2">
+                        <span class="material-symbols-outlined">call</span> ហៅជាងបន្ទាន់
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Booking -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-outline-variant/30 max-w-md">
+            <h2 class="text-2xl font-bold text-primary mb-4">ការកក់ចុងក្រោយ</h2>
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-surface-container overflow-hidden">
+                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_oRyXbP503tpXnC3vuL68JH0woLhiBJLQ4T92NIxEeIi-pFaUKHuW1CXVd9icuXDJogc5gw1O4q6WDDdZ0meQ5HuD62qBwQbhN9CvnpQgCUUGHpi1gKw_CzyCA4tOoY-SVRC5gEjvFKoNxFpysJxLOu2pugjpXZdplEMvgLPhYVZsfMycvMp-QMhdudO0O0Y7t5xRxi6BJKDtR74u8GZRSTOMqhHsSJwEcnmByVItOF3wJP3UI5Q3vdv1S3u45hxr5djBGWDlUzc" alt="Technician">
+                </div>
+                <div>
+                    <h4 class="font-medium">ជាង វិច្ឆិកា</h4>
+                    <p class="text-sm text-on-surface-variant">ជំនាញជួសជុលម៉ាស៊ីនត្រជាក់</p>
+                </div>
+                <span class="ml-auto px-3 py-1 bg-secondary-fixed text-on-secondary-fixed rounded-full text-xs font-bold">កំពុងមកដល់</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-on-surface-variant">តម្លៃសរុប</span>
+                <span class="font-bold text-primary">$18.00</span>
+            </div>
+            <a href="booking_tracking_page.html">
+                <button class="w-full mt-4 py-3 border border-primary text-primary rounded-xl text-sm font-medium hover:bg-primary/5 transition">មើលព័ត៌មានលម្អិត</button>
+            </a>
+        </div>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-primary-container text-white py-8 px-4 w-full mt-auto">
+        <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="space-y-4">
+                <span class="text-2xl font-bold">Hao Chang</span>
+                <p class="text-base text-on-primary-container">យើងជាដៃគូដ៏ទុកចិត្តបំផុតសម្រាប់ការជួសជុលគេហដ្ឋាន។</p>
+            </div>
+            <div class="space-y-4">
+                <h4 class="font-bold text-sm text-secondary-fixed">តំណភ្ជាប់</h4>
+                <nav class="flex flex-col gap-2 text-on-primary-container text-sm">
+                    <a href="index.html" class="hover:text-white transition">ទំព័រដើម</a>
+                    <a href="about_us_page.html" class="hover:text-white transition">អំពីយើង</a>
+                    <a href="how_it_works_page.html" class="hover:text-white transition">របៀបដំណើរការ</a>
+                </nav>
+            </div>
+            <div class="space-y-4">
+                <h4 class="font-bold text-sm text-secondary-fixed">សេវាកម្ម</h4>
+                <nav class="flex flex-col gap-2 text-on-primary-container text-sm">
+                    <a href="service_detail_page_plumber.html" class="hover:text-white transition">ជាងទឹក</a>
+                    <a href="service_detail_page_electrician_1.html" class="hover:text-white transition">ជាងភ្លើង</a>
+                    <a href="service_detail_page_air_conditioner_technician.html" class="hover:text-white transition">ម៉ាស៊ីនត្រជាក់</a>
+                </nav>
+            </div>
+            <div class="space-y-4">
+                <h4 class="font-bold text-sm text-secondary-fixed">ទំនាក់ទំនង</h4>
+                <p class="text-on-primary-container text-sm">+855 12 345 678</p>
+                <p class="text-on-primary-container text-sm">info@haochang.com</p>
+            </div>
+        </div>
+        <div class="max-w-[1200px] mx-auto mt-8 pt-4 border-t border-white/10 text-center text-sm text-on-primary-container">
+            © 2024 Hao Chang Cambodia. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
     </script>
-</body></html>
+</body>
+</html>

@@ -118,106 +118,33 @@
     </script>
 </head>
 <body class="bg-surface text-on-surface">
-<!-- TopNavBar: Customer State (Standardized) -->
-<header class="sticky top-0 z-50 bg-surface border-b border-outline-variant shadow-sm h-20 w-full">
-  <div class="flex justify-between items-center px-unit-lg md:px-margin-desktop h-full max-w-container-max mx-auto">
-    <!-- Brand + Navigation -->
-    <div class="flex items-center gap-unit-xl h-full">
-      <a class="text-headline-md font-bold text-primary" href="index.html">Hao Chang</a>
-      <nav class="hidden md:flex items-center gap-unit-lg h-full">
-        <a class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md h-full flex items-center" href="index.html">ទំព័រដើម</a>
-
-        <!-- Services Dropdown -->
-        <div class="group relative h-full flex items-center">
-          <button class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-1 h-full">
-            សេវាកម្ម
-            <span class="material-symbols-outlined text-[18px]">expand_more</span>
-          </button>
-          <div class="dropdown-menu absolute top-full left-0 w-56 bg-white border border-outline-variant shadow-xl rounded-xl py-2 hidden group-hover:block z-50">
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="service_detail_page_plumber.html">ជាងទឹក</a>
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="service_detail_page_electrician_1.html">ជាងភ្លើង</a>
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="service_detail_page_air_conditioner_technician.html">ជាងម៉ាស៊ីនត្រជាក់</a>
-            <a class="block px-4 py-2 text-secondary font-bold hover:bg-surface-container-low transition-colors text-label-md" href="select_service_page.html">សេវាបន្ទាន់</a>
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="select_service_page.html">កក់ទុកជាមុន</a>
-            <hr class="my-1 border-outline-variant">
-            <a class="block px-4 py-2 text-primary font-bold hover:bg-surface-container-low transition-colors text-label-md" href="services_page.html">មើលសេវាកម្មទាំងអស់</a>
-          </div>
-        </div>
-
-        <a class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md h-full flex items-center" href="available_technicians_page.html">ស្វែងរកជាង</a>
-
-        <!-- Bookings Dropdown -->
-        <div class="group relative h-full flex items-center">
-          <button class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-1 h-full">
-            ការកក់របស់ខ្ញុំ
-            <span class="material-symbols-outlined text-[18px]">expand_more</span>
-          </button>
-          <div class="dropdown-menu absolute top-full left-0 w-56 bg-white border border-outline-variant shadow-xl rounded-xl py-2 hidden group-hover:block z-50">
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="select_service_page.html">កក់សេវាថ្មី</a>
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="service_in_progress_page.html">ការកក់កំពុងដំណើរការ</a>
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="booking_history_page.html">ប្រវត្តិការកក់</a>
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="e_invoice_review_page.html">E-Invoice</a>
-            <a class="block px-4 py-2 text-primary hover:bg-surface-container-low transition-colors text-label-md" href="select_service_page.html">កក់ម្ដងទៀត</a>
-          </div>
-        </div>
-
-        <a class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md h-full flex items-center" href="messages_page.html">សារ</a>
-
-        <!-- Help Dropdown -->
-        <div class="group relative h-full flex items-center">
-          <button class="text-on-surface-variant font-medium hover:text-primary transition-colors font-label-md text-label-md flex items-center gap-1 h-full">
-            ជំនួយ
-            <span class="material-symbols-outlined text-[18px]">expand_more</span>
-          </button>
-          <div class="dropdown-menu absolute top-full left-0 w-56 bg-white border border-outline-variant shadow-xl rounded-xl py-2 hidden group-hover:block z-50">
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="help_support_page_standardized.html">សំណួរញឹកញាប់</a>
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="how_it_works_page.html">របៀបប្រើ Platform</a>
-            <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="contact_page_hao_chang.html">ទាក់ទង Support</a>
-            <a class="block px-4 py-2 text-error hover:bg-error-container/10 transition-colors text-label-md" href="help_support_page_standardized.html">រាយការណ៍បញ្ហា</a>
-          </div>
-        </div>
-      </nav>
-    </div>
-
-    <!-- Right Actions -->
-    <div class="flex items-center gap-unit-md">
-      <!-- Language Switcher -->
-      <div class="hidden md:flex items-center gap-2 text-label-sm font-medium mr-2">
-        <span class="text-primary border-b border-primary">ខ្មែរ</span>
-        <span class="text-outline">|</span>
-        <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">English</a>
-      </div>
-
-      <!-- Notifications -->
-      <button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-all relative">
-        notifications
-        <span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
-      </button>
-
-      <!-- Profile Dropdown -->
-      <div class="group relative flex items-center gap-unit-sm border-l border-outline-variant pl-unit-md ml-unit-sm cursor-pointer h-full">
-        <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary overflow-hidden">
-          <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0Pt8M0b-aDwSzHCECSqTP3OB5V_L3mTGtTPxetD5xvX3YpFBMTGRqN5Si87gNj19OGcOsv0yiB41AsZJBSE9afKGSIzZ-MDp0fDB5JK1eqszZ9sb19CC5HBm7Y-F3zrR0ZMDWXzCIiPXsKZeDQgaV8rbsgNMgztd50s81zvIO7SQE34iD8VKzrJ_PPL94nWAXzpfDJvQG5_mx2Qp74kungBpwZNnPCjHypQC3Np3_zwcj7I0oHT-Pzyx4j5Gj2SJx9kN3uoVP3P0" alt="Profile">
-        </div>
-        <div class="hidden md:flex flex-col items-start leading-tight">
-          <span class="font-label-md text-on-surface">សុភា</span>
-          <span class="text-[10px] text-on-surface-variant">គណនី</span>
-        </div>
-        <span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span>
-
-        <!-- Profile Dropdown Menu -->
-        <div class="dropdown-menu absolute right-0 top-full mt-0 w-56 bg-white border border-outline-variant shadow-xl rounded-xl py-2 hidden group-hover:block z-50">
-          <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="customer_profile_page_redesigned.html">ព័ត៌មានគណនី</a>
-          <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="map_select_location_page.html">ទីតាំងដែលបានរក្សាទុក</a>
-          <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="booking_history_page.html">ការកក់របស់ខ្ញុំ</a>
-          <a class="block px-4 py-2 text-on-surface hover:bg-surface-container-low transition-colors text-label-md" href="customer_profile_page_redesigned.html">ការកំណត់</a>
-          <hr class="my-1 border-outline-variant">
-          <a class="block px-4 py-2 text-error hover:bg-error-container/10 transition-colors text-label-md font-bold" href="login_page.html">ចាកចេញ</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
+<!-- Top Navigation Bar -->
+<header class="bg-surface border-b border-outline-variant fixed top-0 w-full z-50 shadow-sm">
+<div class="flex justify-between items-center px-unit-lg md:px-margin-desktop h-20 w-full max-w-container-max mx-auto">
+<div class="text-headline-md font-bold text-primary">Hao Chang</div>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">ទំព័រដើម</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">សេវាកម្ម</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">ស្វែងរកជាង</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">ការកក់របស់ខ្ញុំ</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">សារ</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">ជំនួយ</a>
+</nav>
+<div class="flex items-center gap-unit-md">
+<div class="hidden md:flex items-center gap-unit-xs mr-2 text-label-md font-medium">
+<span class="text-primary cursor-pointer">ខ្មែរ</span>
+<span class="text-outline-variant">|</span>
+<span class="text-on-surface-variant cursor-pointer hover:text-primary">English</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary">notifications</span>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container cursor-pointer border border-outline-variant overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8GN3rh8os940GBc1c5H3BIa7rCNPmYyP8wv_LFFOrPcB1EbNEmQk8R7UH2lGoHLGiClabyCeyqQ2bhW5DtmW3GuCeH-4ng4MyYRgl8xywou-i1bMgUQeuN8lkP_QTDX4r0a65vkATxSZnLHXPxgxynWwLzW8gNKvw530sJSKZhbfzwth9Z02lCDDFLh7B58BiMUJH_uzz7wcr08iMB4mK8Qw9kD_SUWbXxnc4vbIeEx7CEAH1OZZOHp_elOnbt916ZO03IljOYO8">
+</div>
+</div>
+</div></div></header>
+<!-- Spacer for fixed header -->
+<div class="h-20"></div>
 <!-- Example content for font rendering check -->
 <main class="max-w-container-max mx-auto p-margin-desktop">
 <h1 class="text-headline-xl text-primary mb-6">ទំនាក់ទំនង Hao Chang</h1>
